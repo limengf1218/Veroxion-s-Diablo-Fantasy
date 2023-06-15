@@ -1,6 +1,6 @@
-## Title: Mistra's Diablo Orbs
-## Version: 2.0.2
-## Author: John Rubin
+## Title: Veroxion's Diablo Orbs
+## Version: 1.0.0
+## Author: Cattykitty
 ## Interface: 80000
 ## SavedVariablesPerCharacter: D32CharacterData, MD3PlayerData
 ## SavedVariables: D32MiniMapButtonPosition

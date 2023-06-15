@@ -61,7 +61,9 @@ local orbClassColors = {
 
 	[10] = {health = {r = 1.00, g = 0.49, b = 0.04, a = 1},mana = {r = 0.0, g = 0.44, b = 0.87, a = 1},  animation = "SPELLS\\WhiteRadiationFog.m2", name = "Druid"}, --druid preset
 
-	[11] = {health = {r=0.64, g=1.89, b=.79, a=1}, mana = {r = 0.5, g = 0.32, b = 0.55, a = 1},  animation = "SPELLS\\WhiteRadiationFog.m2", name = "Demon Hunter"}
+	[11] = {health = {r=0.64, g=1.89, b=0.79, a=1}, mana = {r = 0.5, g = 0.32, b = 0.55, a = 1},  animation = "SPELLS\\WhiteRadiationFog.m2", name = "Demon Hunter"},  --Demon Hunter preset
+
+	[12] = {health = {r=0.20, g=0.58, b=0.50, a=1}, mana = {r = 0.0, g = 0.44, b = 0.87, a = 1},  animation = "SPELLS\\WhiteRadiationFog.m2", name = "Evoker"}  --Evoker preset
 }
 
 local fontChoices = {

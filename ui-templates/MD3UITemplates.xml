@@ -1,0 +1,1021 @@
+<Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="ui-lib/MD3UITemplatesLib.lua" />
+
+	<!-- The default panel-->
+	<Frame 
+		name="MD3DefaultPanelTemplate" 
+		virtual="true">
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background-Dark" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32" />
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32" />
+			</EdgeSize>
+			<Color r="0" g="0" b="0" />
+		</Backdrop>
+	</Frame>
+
+	<!-- Thinly edged backdrop -->
+	<Frame 
+		name="MD3ThinBorderedPanelTemplate" 
+		virtual="true">
+		<Backdrop 
+			bgFile="Interface\DialogFrame\UI-Tooltip-Background" 
+			edgeFile="Interface/Tooltips/UI-Tooltip-Border" 
+			tile="true">
+			<BackgroundInsets>
+				<AbsInset left="1" right="1" top="1" bottom="1" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="8" />
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="8" />
+			</EdgeSize>
+			<Color r="0" g="0" b="0" />
+		</Backdrop>
+	</Frame>
+
+	<!-- MD3Font Template -->
+	<FontString 
+		name="MD3UIFontTemplate" 
+		inherits="NumberFontNormalHuge" 
+		font="Interface\addons\MistrasDiabloOrbs\fonts\Of Wildflowers and Wings.ttf" 
+		virtual="true">
+		<FontHeight>
+			<AbsValue val="26" />
+		</FontHeight>
+		<Color r="1" g="0.5" b=".5"/>
+	</FontString>
+	
+	<!-- Main Button Template -->
+	<Button 
+		name="MD3ButtonTemplate" 
+		virtual="true">
+		<Attributes>
+			<Attribute name="textVal" type="string" value="BUTTON"/>
+		</Attributes>
+		<Size>
+			<AbsDimension x="85" y="26" />
+		</Size>
+		<Layers>
+			<Layer>
+				<FontString parentKey="internalText" inherits="BossEmoteNormalHuge" setAllPoints="true" font="Interface\addons\MistrasDiabloOrbs\fonts\Of Wildflowers and Wings.ttf" text="" justifyV="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" />
+					</Anchors>
+					<FontHeight>
+						<AbsValue val="26" />
+					</FontHeight>
+					<Color r="1" g="0.5" b="0.5" />
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				self.defaultTextColor = {r=1, g=.1, b=1, a = 1};
+				self.hoverTextColor = {r=1, g=1, b=1, a=1};
+				self.pressedTextColor = {r=1, g=1, b=1, a=.5};
+
+				MD3Button_SetDefault(self);
+			</OnLoad>
+			<OnEnter>
+				MD3Button_SetHover(self);
+			</OnEnter>
+			<OnLeave>
+				MD3Button_SetDefault(self);
+			</OnLeave>
+			<OnMouseDown>
+				MD3Button_SetPressed(self);
+			</OnMouseDown>
+			<OnMouseUp>
+				MD3Button_SetHover(self);
+			</OnMouseUp>
+		</Scripts>
+	</Button>
+
+	<!-- MD3ButtonTemplate_BG -->
+	<Button 
+		name="MD3ButtonTemplate_BG" 
+		inherits="MD3ButtonTemplate, MD3ThinBorderedPanelTemplate" 
+		virtual="true">
+		<Size>
+			<AbsDimension x="125" y="34" />
+		</Size>
+	</Button>
+
+	<!-- MD3ButtonTemplate_LeftTextAlign -->
+	<Button 
+		name="MD3ButtonTemplate_LeftTextAlign" 
+		inherits="MD3ButtonTemplate" 
+		virtual="true">
+		<Layers>
+			<Layer>
+				<FontString 
+					parentKey="internalText" 
+					inherits="BossEmoteNormalHuge" 
+					setAllPoints="true" 
+					font="Interface\addons\MistrasDiabloOrbs\fonts\Of Wildflowers and Wings.ttf" 
+					text="" 
+					justifyV="CENTER" 
+					justifyH="LEFT">
+					<Anchors>
+						<Anchor point="CENTER" />
+					</Anchors>
+					<FontHeight>
+						<AbsValue val="26" />
+					</FontHeight>
+					<Color r="1" g="0.5" b="0.5" />
+				</FontString>
+			</Layer>
+		</Layers>
+	</Button>
+
+	<!-- MD3DropDownMenuTemplate -->
+	<Button 
+		name="MD3DropDownMenuTemplate" 
+		inherits="UIDropDownMenuTemplate" 
+		virtual="true">
+	</Button>
+
+	<!-- MD3OrbDropDownSelectorTemplate -->
+	<Button 
+		name="MD3OrbDropDownSelectorTemplate" 
+		inherits="MD3DropDownMenuTemplate" 
+		virtual="true">
+		<Scripts>
+			<OnShow>
+				MD3OrbDropDownSelector_Initialize(self);
+			</OnShow>
+		</Scripts>
+	</Button>
+
+	<Button
+		name="MD3FontDropDownSelectorTemplate"
+		inherits="MD3DropDownMenuTemplate"
+		virtual="true">
+		<Scripts>
+			<OnShow>
+				MD3FontDropDownSelector_Initialize(self);
+			</OnShow>
+		</Scripts>
+	</Button>
+
+	<Button
+		name="MD3TriggerDropDownSelectorTemplate"
+		inherits="MD3DropDownMenuTemplate"
+		virtual="true">
+		<Frames>
+			<Button 
+				name="MD3TriggerArgumentDropDownSelector"
+				inherits="MD3DropDownMenuTemplate"
+				parentKey="argumentsDropDown">
+				<Scripts>
+					<OnLoad>
+						UIDropDownMenu_SetWidth(self, 150);
+					</OnLoad>
+				</Scripts>
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset x="0" y="-25" />
+					</Anchor>
+				</Anchors>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				UIDropDownMenu_SetWidth(self, 150);
+			</OnLoad>
+			<OnShow>
+				MD3TriggerDropDownSelector_Initialize(self);
+			</OnShow>
+		</Scripts>
+	</Button>
+
+	<!-- Orb Scroll Frame -->
+	<Frame 
+		name="MD3OrbScrollBarTemplate" 
+		virtual="true" 
+		inherits="MD3ThinBorderedPanelTemplate">
+		<Frames>
+			<ScrollFrame parentKey="scrollFrame" name="$parentScrollFrame" inherits="FauxScrollFrameTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-10" />
+						</Offset>
+					</Anchor>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-33" y="10" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnVerticalScroll>
+						FauxScrollFrame_OnVerticalScroll(self, offset, 16, MD3OrbScrollBar_Update(self));
+					</OnVerticalScroll>
+				</Scripts>
+			</ScrollFrame>
+			<!-- <Button name="MyModEntry1" inherits="MD3ButtonTemplate_LeftTextAlign">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentScrollFrame">
+						<Offset x="5" y="0" />
+					</Anchor>
+				</Anchors>
+			</Button> -->
+		</Frames>
+		<Scripts>
+			<OnUpdate>
+				MD3OrbScrollBar_TryInit(self);
+			</OnUpdate>
+			<OnShow>
+				MD3OrbScrollBar_SetButtonOrbData(self);
+				MD3OrbScrollBar_Update(self.scrollFrame);
+			</OnShow>
+		</Scripts>
+	</Frame>
+
+	<!-- Orb Viewer Template -->
+	<Frame 
+		name="MD3OrbViewerTemplate" 
+		virtual="true">
+		<Frames>
+			<Frame name="MD3OrbViewerContainer">
+				<Anchors>
+					<Anchor point="TOPLEFT" />
+					<Anchor point="BOTTOMRIGHT" />
+				</Anchors>
+			</Frame>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				MD3OrbViewer_Initialize(self);
+			</OnLoad>
+		</Scripts>
+	</Frame>
+
+	<!-- Orb Tab Template -->
+	<Frame
+		name="MD3FillTabPageTemplate"
+		frameStrata="DIALOG"
+		hidden="false"
+		inherits="MD3ThinBorderedPanelTemplate"
+		virtual="true">
+		<Anchors>
+			<Anchor point="TOPLEFT"/>
+			<Anchor point="BOTTOMRIGHT" />
+		</Anchors>
+	</Frame>
+
+	<!-- MD3TabbingEditBoxTemplate -->
+	<EditBox
+		name="MD3TabbingEditBoxTemplate"
+		virtual="true"
+		inherits="MD3ThinBorderedPanelTemplate"
+		autoFocus="false">
+		<Scripts>
+			<OnTabPressed>
+				MD3TabbingEditBox_OnTabPressed(self);
+			</OnTabPressed>
+		</Scripts>
+	</EditBox>
+
+	<!-- MD3RGBEditBoxTemplate -->
+	<EditBox 
+		name="MD3RGBEditBoxTemplate" 
+		virtual="true" 
+		inherits="MD3TabbingEditBoxTemplate" 
+		numeric="true" 
+		letters="3"
+		autoFocus="false">
+		<Size>
+			<AbsDimension x="35" y="25" />
+		</Size>
+		<FontString inherits="ChatFontNormal" justifyV="MIDDLE" justifyH="CENTER">
+			<Anchors>
+				<Anchor point="CENTER"/>
+			</Anchors>
+		</FontString>
+		<Scripts>
+			<OnEscapePressed>
+				self:ClearFocus();
+			</OnEscapePressed>
+			<OnEditFocusLost>
+				self:HighlightText(0, 0);
+			</OnEditFocusLost>
+			<OnTextChanged>
+				local currentValue = self:GetNumber();
+				if(currentValue > 255) then
+					self:SetText(255);
+				end
+				<!-- Always show something -->
+				self:SetText(self:GetNumber());
+			</OnTextChanged>
+		</Scripts>
+	</EditBox>
+	
+	<!-- MD3ColorPanelTemplate -->
+	<Frame 
+		name="MD3ColorPanelTemplate"
+		inherits="MD3ThinBorderedPanelTemplate"
+		virtual="true">
+		<Size>
+			<AbsDimension x="200" y="100"/>
+		</Size>
+		<Scripts>
+			<OnLoad>
+				MD3ColorPanel_Initialize(self);
+			</OnLoad>
+		</Scripts>
+		<Frames>
+			<Button name="$parentColorPickerButton" parentKey="colorPickerButton" inherits="MD3ButtonTemplate">
+				<Anchors>
+					<Anchor point="TOP">
+						<Offset x="0" y="-10"/>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						MD3Button_SetText(self, "Color");
+						MD3Button_SetDefaultTextColor(self, {r=0, g=.701, b=1, a=1});
+						MD3Button_SetHoverTextColor(self, {r=1, g=1, b=1, a=1});
+						MD3Button_SetPressedTextColor(self, {r=1, g=1, b=1, a=.5});
+						MD3Button_SetDefault(self);
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<EditBox name="$parentRedEditBox" parentKey="redValue" inherits="MD3RGBEditBoxTemplate">
+				<Layers>
+					<Layer>
+						<FontString 
+							name="r" 
+							inherits="MD3UIFontTemplate" 
+							text="r" 
+							justifyV="MIDDLE" 
+							justifyH="CENTER">
+							<Anchors>
+								<Anchor point="BOTTOM">
+									<Offset x="0" y="-21"/>
+								</Anchor>
+							</Anchors>
+							<Color r="1" g="0" b="0"/>
+							<FontHeight>
+								<AbsValue val="18" />
+							</FontHeight>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Anchors>
+					<Anchor point="LEFT">
+						<Offset x="15" y="-8"/>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnTextChanged inherit="append">
+						if(self:HasFocus()) then
+							MD3ColorPanel_UpdateFromColorValues(self:GetParent());
+						end
+					</OnTextChanged>
+				</Scripts>
+			</EditBox>
+			<EditBox name="$parentGreenEditBox" parentKey="greenValue" inherits="MD3RGBEditBoxTemplate">
+				<Layers>
+					<Layer>
+						<FontString name="g" inherits="MD3UIFontTemplate" text="g" justifyV="MIDDLE" justifyH="CENTER">
+							<Anchors>
+								<Anchor point="BOTTOM">
+									<Offset x="0" y="-19"/>
+								</Anchor>
+							</Anchors>
+							<FontHeight>
+								<AbsValue val="18" />
+							</FontHeight>
+							<Color r="0" g="1" b="0"/>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentRedEditBox" relativePoint="RIGHT">
+						<Offset x="10" y="0"/>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnTextChanged inherit="append">
+						if(self:HasFocus()) then
+							MD3ColorPanel_UpdateFromColorValues(self:GetParent());
+						end
+					</OnTextChanged>
+				</Scripts>
+			</EditBox>
+			<EditBox name="$parentBlueEditBox" parentKey="blueValue" inherits="MD3RGBEditBoxTemplate">
+				<Layers>
+					<Layer>
+						<FontString name="b" inherits="MD3UIFontTemplate" text="b" justifyV="MIDDLE" justifyH="CENTER">
+							<Anchors>
+								<Anchor point="BOTTOM">
+									<Offset x="0" y="-24"/>
+								</Anchor>
+							</Anchors>
+							<FontHeight>
+								<AbsValue val="18" />
+							</FontHeight>
+							<Color r="0" g="0" b="1"/>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentGreenEditBox" relativePoint="RIGHT">
+						<Offset x="10" y="0"/>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnTextChanged inherit="append">
+						if(self:HasFocus()) then
+							MD3ColorPanel_UpdateFromColorValues(self:GetParent());
+						end
+					</OnTextChanged>
+				</Scripts>
+			</EditBox>
+			<EditBox name="$parentAlphaEditBox" parentKey="alphaValue" inherits="MD3RGBEditBoxTemplate">
+				<Layers>
+					<Layer>
+						<FontString name="a" inherits="MD3UIFontTemplate" text="a" justifyV="MIDDLE" justifyH="CENTER">
+							<Anchors>
+								<Anchor point="BOTTOM">
+									<Offset x="0" y="-21"/>
+								</Anchor>
+							</Anchors>
+							<FontHeight>
+								<AbsValue val="18" />
+							</FontHeight>
+							<Color r="1" g="1" b="1"/>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentBlueEditBox" relativePoint="RIGHT">
+						<Offset x="10" y="0"/>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnTextChanged inherit="append">
+						if(self:HasFocus()) then
+							MD3ColorPanel_UpdateFromColorValues(self:GetParent());
+						end
+					</OnTextChanged>
+				</Scripts>
+			</EditBox>
+		</Frames>
+	</Frame>
+
+	<!-- MD3FillAnimationTextureDropDownSelectorTemplate -->
+	<Button
+		name="MD3FillAnimationTextureDropDownSelectorTemplate"
+		inherits="MD3DropDownMenuTemplate"
+		virtual="true">
+		<Layers>
+			<Layer>
+				<FontString 
+					name="$parentTexturesLabel" 
+					inherits="MD3UIFontTemplate" 
+					text="Layer" 
+					justifyV="MIDDLE" 
+					justifyH="CENTER">
+					<Size>
+						<AbsDimension x="150" y="27"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset x="0" y="30"/>
+						</Anchor>
+					</Anchors>
+					<FontHeight>
+						<AbsValue val="18" />
+					</FontHeight>
+					<Color r="1" g="1" b="1"/>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				MD3Messager:Subscribe(
+					MD3MessageTypes.OrbEditorFillSelectionChanged,
+					function(fillDataModel)
+						self.fillDataModel = fillDataModel;
+					end);
+			</OnLoad>
+			<OnShow>
+				MD3FillAnimationTextureDropDownSelector_Initialize(self);
+			</OnShow>
+		</Scripts>
+		<Size>
+			<AbsDimension x="165" y="60" />
+		</Size>
+	</Button>
+
+	<!-- MD3FillAnimationTextureDataDropDownSelectorTemplate -->
+	<Button
+		name="MD3FillAnimationTextureDataDropDownSelectorTemplate"
+		inherits="MD3DropDownMenuTemplate"
+		virtual="true">
+		<Layers>
+			<Layer>
+				<FontString 
+					name="$parentTexturesLabel" 
+					inherits="MD3UIFontTemplate" 
+					text="Texture" 
+					justifyV="MIDDLE" 
+					justifyH="CENTER">
+					<Size>
+						<AbsDimension x="150" y="27"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset x="0" y="25"/>
+						</Anchor>
+					</Anchors>
+					<FontHeight>
+						<AbsValue val="18" />
+					</FontHeight>
+					<Color r="1" g="1" b="1"/>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				MD3Messager:Subscribe(
+					MD3MessageTypes.FillAnimationTextureSelectionChanged,
+					function(fatdModel)
+						self.textureDataModel = fatdModel;
+						MD3FillAnimationTextureDataDropDownSelector_Initialize(self);
+					end);
+			</OnLoad>
+			<OnShow>
+				MD3FillAnimationTextureDataDropDownSelector_Initialize(self);
+			</OnShow>
+		</Scripts>
+		<Size>
+			<AbsDimension x="165" y="60" />
+		</Size>
+	</Button>
+
+	<!-- MD3OrbScaleSlider -->
+	<Slider 
+		name="MD3OrbScaleSliderTemplate"
+		inherits="OptionsSliderTemplate"
+		orientation="HORIZONTAL"
+		enableMouse="true"
+		virtual="true"
+		minValue="0"
+		maxValue="0">
+		<Scripts>
+			<OnLoad>
+				MD3OrbScaleSlider_Initialize(self);
+			</OnLoad>
+		</Scripts>
+	</Slider>
+
+	<!-- MD3FillValueSlider -->
+	<Slider 
+		name="MD3FillValueSliderTemplate"
+		inherits="OptionsSliderTemplate"
+		orientation="HORIZONTAL"
+		enableMouse="true"
+		virtual="true"
+		minValue="0"
+		maxValue="0">
+		<Scripts>
+			<OnLoad>
+				MD3FillValueSlider_Initialize(self);
+			</OnLoad>
+		</Scripts>
+	</Slider>
+
+	<Slider
+		name="MD3OffsetSliderTemplate"
+		inherits="OptionsSliderTemplate"
+		orientation="HORIZONTAL"
+		enableMouse="true"
+		virtual="true"
+		minValue="0"
+		maxValue="0">
+	</Slider>
+
+	<Slider
+		name="MD3ValueLabelOffsetSliderTemplate"
+		inherits="MD3OffsetSliderTemplate"
+		virtual="true">
+		<Scripts>
+			<OnLoad>
+				<!-- Subscribe for value label selection changes, set the offset data when changed -->
+				MD3Messager:Subscribe(
+					MD3MessageTypes.ValueLabelSelectionChanged,
+					function(valueLabelSelection)
+						self.offsetsDataModel = valueLabelSelection.offsets;
+						MD3OffsetSlider_UpdateValues(self);
+					end);
+			</OnLoad>
+		</Scripts>	
+	</Slider>
+
+	<Frame
+		name="MD3FillGeneralTabPageTemplate"
+		inherits="MD3FillTabPageTemplate"
+		enableMouse="true"
+		hidden="false"
+		virtual="true">
+		<Frames>
+			<Slider name="MD3FillValueSlider" inherits="MD3FillValueSliderTemplate">
+				<Size>
+					<AbsDimension x="200" y="16" />
+				</Size>
+				<Anchors>
+					<Anchor point="CENTER" />
+				</Anchors>
+			</Slider>
+		</Frames>
+	</Frame>
+
+	<!-- Fill Colors Tab Page -->
+	<Frame
+		name="MD3FillColorsTabPageTemplate"
+		inherits="MD3FillTabPageTemplate"
+		virtual="true">
+		<Scripts>
+			<OnLoad inherit="append">
+				MD3FillColorTabPage_Initialize(self);
+			</OnLoad>
+		</Scripts>
+		<Frames>
+			<Frame 
+				name="MD3FillAnimationTextureDropDownSelector"
+				inherits="MD3FillAnimationTextureDropDownSelectorTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="19" y="-45" />
+					</Anchor>
+				</Anchors>
+			</Frame>
+			<Frame 
+				name="$parentTextureOptions" 
+				inherits="MD3ThinBorderedPanelTemplate">
+				<Layers>
+					<Layer>
+						<FontString 
+							name="$parentTextureOptionsLabel" 
+							inherits="MD3UIFontTemplate" 
+							text="Layer Options" 
+							justifyV="MIDDLE" 
+							justifyH="CENTER">
+							<Size>
+								<AbsDimension x="150" y="27"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOP">
+									<Offset x="0" y="27"/>
+								</Anchor>
+							</Anchors>
+							<FontHeight>
+								<AbsValue val="18" />
+							</FontHeight>
+							<Color r="1" g="1" b="1"/>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Size>
+					<AbsDimension x="200" y="200" />
+				</Size>
+				<Anchors>
+					<Anchor 
+						point="TOPLEFT"
+						relativeTo="MD3FillAnimationTextureDropDownSelector"
+						relativePoint="TOPRIGHT">
+						<Offset x="19" y="-5" />
+					</Anchor>
+				</Anchors>
+				<Frames>
+					<Frame 
+						name="MD3FillAnimationTextureDataDropDownSelector"
+						inherits="MD3FillAnimationTextureDataDropDownSelectorTemplate">
+						<Anchors>
+							<Anchor point="TOP">
+								<Offset x="0" y="-30"/>
+							</Anchor>
+						</Anchors>	
+					</Frame>
+					<Frame name="MD3FillColorPanel" inherits="MD3ColorPanelTemplate">
+						<Frames>
+							<Button name="TestTriggerSelectorDropDown" inherits="MD3TriggerDropDownSelectorTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="MD3OrbScaleSlider" relativePoint="BOTTOMLEFT">
+										<Offset x="-25" y="-10" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad inherit="append">
+										MD3Messager:Subscribe(
+											MD3MessageTypes.OrbViewerActiveOrbViewModelChanged,
+											function(orbViewModel)
+												self.orbViewModel = orbViewModel;
+												MD3TriggerDropDownSelector_Initialize(self);
+											end);
+										MD3Messager:Subscribe(
+											MD3MessageTypes.FillAnimationTextureSelectionChanged,
+											function(orbViewModel)
+												MD3TriggerDropDownSelector_SetSelectedIDAndNotify(self, 1);
+											end);
+									</OnLoad>
+								</Scripts>
+							</Button>
+						</Frames>
+						<Anchors>
+							<Anchor 
+								point="BOTTOM">
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad inherit="append">
+								MD3FillAnimationTextureColorPanel_Initialize(self);
+							</OnLoad>
+						</Scripts>
+					</Frame>
+				</Frames>
+			</Frame>
+		</Frames>
+	</Frame>
+
+	<!-- MD3ValueLabelsTabPageTemplate -->
+	<Frame
+		name="MD3ValueLabelsTabPageTemplate"
+		inherits="MD3FillTabPageTemplate"
+		virtual="true">
+		<Frames>
+			<Button
+				name="MD3FillValueLabelFontSelectorDropDown" 
+				inherits="MD3FontDropDownSelectorTemplate">
+				<Anchors>
+					<Anchor point="CENTER"/>
+				</Anchors>
+				<Scripts>
+					<OnLoad inherit="append">
+						UIDropDownMenu_SetWidth(self, 170);
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Slider
+				name="MD3ValueLabelOffsetSlider"
+				inherits="MD3ValueLabelOffsetSliderTemplate">
+				<Size>
+					<AbsDimension x="200" y="16" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOP" />
+				</Anchors>
+				<Scripts>
+					<OnLoad inherit="append">
+						MD3OffsetSlider_Initialize(
+							self,
+							{x = 0, y =0},
+							"x",
+							-100,
+							100);
+					</OnLoad>
+				</Scripts>
+			</Slider>
+		</Frames>
+	</Frame>
+
+	<!-- Fill Options Tabs Container Template -->
+	<Frame 
+		name="MD3FillOptionsTabsContainerTemplate" 
+		enableMouse="true"
+		hidden="false"
+		virtual="true">
+		<Frames>
+			<Frame name="$parentGeneral" parentKey="page1" inherits="MD3FillGeneralTabPageTemplate" hidden="false">
+			</Frame>
+			<Frame name="$parentColors" parentKey="page2" inherits="MD3FillColorsTabPageTemplate" hidden="true">
+			</Frame>
+			<Frame name="$parentAnimations" parentKey="page3" inherits="MD3FillTabPageTemplate" hidden="true">
+			</Frame>
+			<Frame name="$parentValueLabels" parentKey="page4" inherits="MD3ValueLabelsTabPageTemplate" hidden="true">
+			</Frame>
+			<Button name="$parentTab1" parentKey="tab1" inherits="TabButtonTemplate" id="1" text="General">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentGeneral" relativePoint="TOPLEFT">
+						<Offset x="10" y="12"/>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						MD3FillOptionsTabsContainer_SetTab(self:GetParent(), 1);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="$parentTab2" parentKey="tab2" inherits="TabButtonTemplate" id="2" text="Colors">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentTab1" relativePoint="RIGHT">
+						<Offset x="2" y="0"/>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						MD3FillOptionsTabsContainer_SetTab(self:GetParent(), 2);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="$parentTab3" parentKey="tab3" inherits="TabButtonTemplate" id="3" text="Animations">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentTab2" relativePoint="RIGHT">
+						<Offset x="2" y="0"/>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						MD3FillOptionsTabsContainer_SetTab(self:GetParent(), 3);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="$parentTab4" parentKey="tab4" inherits="TabButtonTemplate" id="4" text="Value Labels">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentTab3" relativePoint="RIGHT">
+						<Offset x="2" y="0"/>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						MD3FillOptionsTabsContainer_SetTab(self:GetParent(), 4);
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				MD3FillOptionsTabsContainer_Initialize(self);
+				MD3FillOptionsTabsContainer_SetTab(self, 1);
+           </OnLoad>
+		</Scripts>
+	</Frame>
+
+	<!-- Orb Tab Panel Container Template -->
+	<Frame 
+		name="MD3FillTabContainerTemplate" 
+		enableMouse="true"
+		hidden="false"
+		virtual="true">
+		<Frames>
+			<Frame name="MD3FillTabPage" inherits="MD3FillTabPageTemplate">
+				<Frames>
+					<Frame name="MD3FillOptionsTabsContainer" inherits="MD3FillOptionsTabsContainerTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset x="0" y="-35" />
+							</Anchor>
+							<Anchor point="BOTTOMRIGHT" />
+						</Anchors>
+					</Frame>
+				</Frames>
+			</Frame>
+			<Button name="$parentTab1" parentKey="tab1" inherits="TabButtonTemplate" id="1" text="Fill 1">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="MD3FillTabPage" relativePoint="TOPLEFT">
+						<Offset x="10" y="12"/>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						MD3FillTabsContainer_SetTab(self:GetParent(), 1);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="$parentTab2" parentKey="tab2" inherits="TabButtonTemplate" id="2" text="Fill 2">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentTab1" relativePoint="RIGHT">
+						<Offset x="2" y="0"/>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						MD3FillTabsContainer_SetTab(self:GetParent(), 2);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="$parentTab3" parentKey="tab3" inherits="TabButtonTemplate" id="3" text="Fill 3">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentTab2" relativePoint="RIGHT">
+						<Offset x="2" y="0"/>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						MD3FillTabsContainer_SetTab(self:GetParent(), 3);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="$parentTab4" parentKey="tab4" inherits="TabButtonTemplate" id="4" text="Fill 4">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentTab3" relativePoint="RIGHT">
+						<Offset x="2" y="0"/>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						MD3FillTabsContainer_SetTab(self:GetParent(), 4);
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				MD3FillTabsContainer_Initialize(self);
+				PanelTemplates_SetNumTabs(self, 4);
+				MD3FillTabsContainer_SetTab(self, 1);
+           </OnLoad>
+		</Scripts>
+	</Frame>
+
+	<!-- MD3 Orb Editor -->
+	<Frame 
+		name="MD3OrbEditorTemplate"  
+		inherits="MD3ThinBorderedPanelTemplate" 
+		virtual="true">
+		<Scripts>
+			<OnLoad>
+				MD3Utils:SetFrameClampedToScreen(self, true);
+			</OnLoad>
+		</Scripts>
+		<Size>
+			<AbsDimension x="700" y="500" />
+		</Size>
+		<Layers>
+			<Layer>
+				<FontString
+					inherits="MD3UIFontTemplate"
+					text="My Orbs" 
+					justifyV="CENTER"
+					justifyH="CENTER">
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset x="50" y="-20" />
+						</Anchor>
+					</Anchors>
+					<FontHeight>
+						<AbsValue val="22" />
+					</FontHeight>
+					<Color r="1" g="1" b="1" />
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Frame name="MD3OrbSelectionDropdown" inherits="MD3OrbDropDownSelectorTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="24" y="-45" />
+					</Anchor>
+				</Anchors>
+			</Frame>
+			<Slider
+				name="MD3OrbScaleSlider" inherits="MD3OrbScaleSliderTemplate">
+				<Layers>
+					<FontString 
+						name="OrbScaleText" 
+						inherits="MD3UIFontTemplate" 
+						text="Orb Scale" 
+						justifyV="MIDDLE" 
+						justifyH="CENTER">
+						<Anchors>
+							<Anchor point="TOP">
+								<Offset x="0" y="0"/>
+							</Anchor>
+						</Anchors>
+						<Color r="1" g="1" b="1"/>
+						<FontHeight>
+							<AbsValue val="18" />
+						</FontHeight>
+					</FontString>
+				</Layers>
+				<Size>
+					<AbsDimension x="150" y="16" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="32" y="-125"/>
+					</Anchor>
+				</Anchors>
+			</Slider>
+			<Frame name="MD3FillTabsContainer" inherits="MD3FillTabContainerTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="208" y="-45" />
+					</Anchor>
+					<Anchor point="BOTTOMRIGHT" />
+				</Anchors>
+			</Frame>
+		</Frames>
+	</Frame>
+</Ui> 

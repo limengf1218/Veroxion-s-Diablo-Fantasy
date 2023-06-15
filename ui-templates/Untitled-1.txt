@@ -1,0 +1,3 @@
+float perc = Mathf.Abs(Player.Position.y * seekBounds);
+float playerYMin = Player.PlayerPosition.y - perc;
+float playerYMax = Player.PlayerPosition.y + perc;

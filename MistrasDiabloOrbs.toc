@@ -1,0 +1,17 @@
+## Title: Mistra's Diablo Orbs
+## Version: 2.0.2
+## Author: John Rubin
+## Interface: 80000
+## SavedVariablesPerCharacter: D32CharacterData, MD3PlayerData
+## SavedVariables: D32MiniMapButtonPosition
+## Notes: Fully customizable Diablo Orbs, for WoW!
+MD3Constants.lua
+MD3Config.lua
+MD3Utils.lua
+MD3Messager.lua
+MD3CoreLib.lua
+MD3Behaviors.lua
+MD3Orbs.lua
+MistrasDiabloOrbs.xml
+MD3UI.xml
+MD32MinimapButton.xml

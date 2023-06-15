@@ -1,0 +1,173 @@
+<Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="MD3UI.lua" />
+	<Include file="ui-templates/MD3UITemplates.xml" />
+
+	<!-- Main UI Root -->
+	<Frame 
+		name="MD3UIRoot" 
+		inherits="MD3DefaultPanelTemplate" 
+		parent="UIParent" 
+		topLevel="true" 
+		movable="true"
+		hidden="false">
+		<Scripts>
+			<OnLoad>
+				<!--Make the master frame movable. -->
+				MD3Utils:SetFrameMovable(self, "LeftButton");
+				MD3Utils:SetFrameClampedToScreen(self, true);
+			</OnLoad>
+		</Scripts>
+		<Size>
+			<AbsDimension x="400" y="500" />
+		</Size>
+		<Anchors>
+			<Anchor point="TOP">
+				<Offset x="0" y="0" />
+			</Anchor>
+		</Anchors>
+		<Layers>
+			<Layer level="OVERLAY">
+				<FontString 
+					name="MD3_Name_String" 
+					inherits="NumberFontNormalHuge" 
+					font="Interface\addons\MistrasDiabloOrbs\fonts\Of Wildflowers and Wings.ttf" 
+					text="Mistra's Diablo Orbs" 
+					justifyV="TOP">
+					<Size>
+						<AbsDimension x="262" y="57" />
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset x="0" y="-15" />
+						</Anchor>
+					</Anchors>
+					<FontHeight>
+						<AbsValue val="42" />
+					</FontHeight>
+					<Color r="1" g="0" b="0" />
+				</FontString>
+				<FontString 
+					name="MD3_Description_String" 
+					font="Interface\addons\MistrasDiabloOrbs\fonts\Of Wildflowers and Wings.ttf" 
+					text="Orb Configuration" 
+					justifyV="TOP">
+					<Size>
+						<AbsDimension x="194" y="39" />
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset x="0" y="-52" />
+						</Anchor>
+					</Anchors>
+					<FontHeight>
+						<AbsValue val="24" />
+					</FontHeight>
+					<Color r="1" g="0.5" b="0.5" />
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<!-- The root renderable space of the MD3UIRoot panel -->
+			<Frame name="MD3UIRootPanel">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="0" y="-75" />
+					</Anchor>
+					<Anchor point="BOTTOMRIGHT" />
+				</Anchors>
+				<Frames>
+					<Frame name="MD3UIRootConfig" hidden="false">
+						<Anchors>
+							<Anchor point="TOPLEFT"/>
+							<Anchor point="BOTTOMRIGHT"/>
+						</Anchors>
+						<Frames>
+							<Button name="MD3OrbEditorOpenButton" inherits="MD3ButtonTemplate">
+								<Anchors>
+									<Anchor point="TOP">
+										<Offset x="0" y="-50" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad inherit="append">
+										MD3Button_SetText(self,"Orb Editor");
+									</OnLoad>
+									<OnClick>
+										MD3UI:SwapFrames(MD3UIRootConfig, MD3OrbEditor);
+									</OnClick>
+								</Scripts>
+							</Button>
+							<Button name="MD3UIRootCloseButton" inherits="MD3ButtonTemplate">
+								<Anchors>
+									<Anchor point="BOTTOM">
+										<Offset x="0" y="25" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad inherit="append">
+										MD3Button_SetText(self,"Close");
+									</OnLoad>
+									<OnClick>
+										MD3UI:CloseFrame(MD3UIRoot);
+									</OnClick>
+								</Scripts>
+							</Button>
+						</Frames>
+					</Frame>
+					<!-- Orb Editor Panel -->
+					<Frame name="MD3OrbEditor" inherits="MD3OrbEditorTemplate" hidden="true">
+						<Anchors>
+							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MD3UIRoot"/>
+						</Anchors>
+						<Frames>
+							<Frame name="MD3OrbViewer" inherits="MD3OrbViewerTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="MD3UIRootPanel">
+										<Offset x="10" y="0" />
+									</Anchor>
+									<Anchor point="BOTTOMRIGHT" relativeTo="MD3UIRootPanel">
+										<Offset x="-10" y="50" />
+									</Anchor>
+								</Anchors>
+							</Frame>
+							<!-- Sends a "Save" event out -->
+							<Button name="MD3UIRootSaveButton" inherits="MD3ButtonTemplate">
+								<Anchors>
+									<Anchor point="BOTTOM" relativeTo="MD3UIRoot">
+										<Offset x="-45" y="20" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad inherit="append">
+										MD3Button_SetText(self, "Save");
+									</OnLoad>
+									<OnClick>
+										MD3Messager:SendMessage(
+											MD3MessageTypes.SavePreviewedChangesRequested,
+											nil);
+									</OnClick>
+								</Scripts>
+							</Button>
+							<!-- Closes the menu -->
+							<Button name="MD3OrbEditorCloseButton" inherits="MD3ButtonTemplate">
+								<Anchors>
+									<Anchor point="BOTTOM" relativeTo="MD3UIRoot">
+										<Offset x="45" y="20"/>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad inherit="append">
+										MD3Button_SetText(self,"Done");
+									</OnLoad>
+									<OnClick>
+										MD3UI:SwapFrames(MD3OrbEditor, MD3UIRootConfig);
+									</OnClick>
+								</Scripts>
+							</Button>
+						</Frames>
+					</Frame>
+				</Frames>
+			</Frame>
+		</Frames>
+	</Frame>
+</Ui>

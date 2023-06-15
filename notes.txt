@@ -1,0 +1,43 @@
+Things we need to know to re-create an orb:
+
+An orb has a type:
+-Single
+-Double
+
+An orb has attributes:
+containerData -> a name pointer to the MD3Config.MD3Textures.containers table.  If the orbType is "single", the key will be found in the ["whole"] child, if it is "double", the key will be found in the "halves" child. 
+fills -> an array of fills that occupy orb space
+
+A fill has attributes:
+Any "fill" object will refer back to its parent when created.  "[fill].orbParent".
+A "fill" object is a Texture, and creating a "Fill" requires a reference to fillData -> a name pointer to the MD3Config.MD3Textures.fills table.  If the orbType is "single", the key will be found in the ["whole"] child, if it is "double", the key will be found in the "halves" child.
+
+A "fill" object may have n-number of 'animation' children stored in [fill].animations:
+each time an animation is added to a fill, it will be added to the end of the animations table
+a "fill" object will offer up the count of the number of animations it contains via the [fill].getAnimationCount() function.
+
+A "fill" object will have a mask texture referenced by default for its animation textures - this mask is referenced by the [fill].animationTextureMask object.
+
+A "fill" object is given methods it can use to query its resource type's value and max value.
+
+An "animation" texture will always reference its "fill" parent by the "[animation].fillParent" pointer.
+
+
+
+
+
+
+----todo:
+remove fill1/fill2 from orb - orb.fills is preferred access methods
+remove [animation] from fill
+
+
+--color profiles:
+these are sets of colorization data that a player can create to switch between.  This allows us to set "profile triggers" that can automatically swap the player to a new color profile anytime.
+Each color profile contains colorization data.  A profile's base "colors" are considered to be the color "default" for the orb layers.  Color triggers within a profile may modify the color until the trigger condition ends. 
+
+--color triggers
+these are sets of colorization data within a color profile that a player can create to enable new colorizations when an in-game event occurs.  Color triggers are stack ranked.  Eventually we may allow the player to change color trigger rank behaviors, but each trigger, when its condition ends, will yield color control to the previously activated trigger.  If no trigger is active, on the final trigger exit case, the default color of the color profile will be enabled.
+
+--data
+the "active" color profile of an orb's data components will store a copy of colorization data

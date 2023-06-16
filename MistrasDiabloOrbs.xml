@@ -93,7 +93,7 @@
 					</OnMouseDown>
 					<OnMouseUp>
 						local r,g,b,a = HealthOrbButton.text:GetTextColor()
-						HealthOrbButton.text:SetTextColor(r,g,b,a*2)
+						HealthOrbButton.text:SetTextColor(r,g,b,1)
 					</OnMouseUp>
 					<OnClick>
 						if D32ConfigFrame:IsVisible() then
@@ -186,7 +186,7 @@
 					</OnMouseDown>
 					<OnMouseUp>
 						local r,g,b,a = ManaOrbButton.text:GetTextColor()
-						ManaOrbButton.text:SetTextColor(r,g,b,a*2)
+						ManaOrbButton.text:SetTextColor(r,g,b,1)
 					</OnMouseUp>
 					<OnClick>
 						if D32ConfigFrame:IsVisible() then
@@ -756,11 +756,11 @@
 			</Frame>
 			<Button name="D32ConfigFrameCloseButton" inherits="UIPanelCloseButton" parent="D32ConfigFrame" text="">
 				<Size>
-					<AbsDimension x="35" y="35" />
+					<AbsDimension x="30" y="30" />
 				</Size>
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset x="422" y="0" />
+						<Offset x="430" y="5" />
 					</Anchor>
 				</Anchors>
 				<Scripts>

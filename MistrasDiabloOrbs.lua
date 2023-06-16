@@ -901,8 +901,8 @@ function D32MonitorPowers(frame)
 		end
 	elseif D32className == "Monk" then
 		powerType = 12
-		local numHolyPower = UnitPower("player",powerType)
-		if numHolyPower > 0 then
+		local chi = UnitPower("player",powerType)
+		if chi > 0 then
 			if not frame.backDrop:IsVisible() then
 				frame.backDrop:Show()
 				frame.text:Show()
@@ -913,11 +913,11 @@ function D32MonitorPowers(frame)
 				frame.text:Hide()
 			end
 		end
-		frame.text:SetText(numHolyPower)
-		if numHolyPower > 1 then
+		frame.text:SetText(chi)
+		if chi > 1 then
 			powerFrame.text:SetPoint("CENTER",1,0)
 		end
-		if numHolyPower >=4 then
+		if chi >=4 then
 			powerFrame.fontHolder.animGroup:Play()
 		else
 			powerFrame.fontHolder.animGroup:Stop()
@@ -993,6 +993,38 @@ function D32MonitorPowers(frame)
 			powerFrame.fontHolder.animGroup:Play();
 		else
 			powerFrame.fontHolder.animGroup:Stop();
+		end
+	elseif D32className == "Death Knight" then
+		local runes = UnitPower("player", 6);
+
+		if not frame.backDrop:IsVisible() then
+			frame.backDrop:Show();
+			frame.text:Show();
+		end
+		frame.text:SetText(runes)
+		if runes > 1 then
+			powerFrame.text:SetPoint("CENTER",1,0)
+		end
+		if runes <=3 then
+			powerFrame.fontHolder.animGroup:Play()
+		else
+			powerFrame.fontHolder.animGroup:Stop()
+		end
+	elseif D32className == "Evoker" then
+		local Essence = UnitPower("player", 19);
+
+		if not frame.backDrop:IsVisible() then
+			frame.backDrop:Show();
+			frame.text:Show();
+		end
+		frame.text:SetText(Essence)
+		if Essence > 1 then
+			powerFrame.text:SetPoint("CENTER",1,0)
+		end
+		if Essence <=3 then
+			powerFrame.fontHolder.animGroup:Play()
+		else
+			powerFrame.fontHolder.animGroup:Stop()
 		end
 	end
 
@@ -1343,25 +1375,25 @@ function D32ApplyChanges()
 	activeElement.orbColor.r, activeElement.orbColor.g, activeElement.orbColor.b, activeElement.orbColor.a = r,g,b,a
 
 	local galaxyColors = {r=0,g=0,b=0,a=0}
-	r,g,b,a = xmlOrbDisplayFrame2.orb.galaxy1.texture:GetVertexColor()
+	local r,g,b,a = xmlOrbDisplayFrame2.orb.galaxy1.texture:GetVertexColor()
 	galaxyColors.r, galaxyColors.g, galaxyColors.b, galaxyColors.a = r,g,b,a
 	activeElement.galaxy.r, activeElement.galaxy.g, activeElement.galaxy.b, activeElement.galaxy.a = r,g,b,a
 
 	local font1Color = {r=0,g=0,b=0,a=0}
-	r,g,b,a = xmlOrbDisplayFrame2.orb.font1:GetTextColor()
+	local r,g,b,a = xmlOrbDisplayFrame2.orb.font1:GetTextColor()
 	font1Color.r,font1Color.g,font1Color.b,font1Color.a = r,g,b,a
 	activeElement.font1.r, activeElement.font1.g, activeElement.font1.b, activeElement.font1.a = r,g,b,a
 
 	local font2Color = {r=0,g=0,b=0,a=0}
-	r,g,b,a = xmlOrbDisplayFrame2.orb.font2:GetTextColor()
+	localr,g,b,a = xmlOrbDisplayFrame2.orb.font2:GetTextColor()
 	font2Color.r,font2Color.g,font2Color.b,font2Color.a = r,g,b,a
 	activeElement.font2.r, activeElement.font2.g, activeElement.font2.b, activeElement.font2.a = r,g,b,a
 
 	D32UpdateOrbColor(healthOrb,D32CharacterData.healthOrb.orbColor,D32CharacterData.healthOrb.galaxy,D32CharacterData.healthOrb.font1,D32CharacterData.healthOrb.font2)
 
-	local hPrefix = strmatch(xmlOrbDisplayFrame2.orb.filling:GetTexture(),"(MDO_orb_filling%d+)")
+	local hPrefix = string.match(xmlOrbDisplayFrame2.orb.filling:GetTexture(),"(MDO_orb_filling%d+)")
 	CommitButton.textureElement.fill = hPrefix
-	local mPrefix,mNum = strmatch(xmlOrbDisplayFrame2.orb.galaxy1.texture:GetTexture(),"(orb_rotation_%a+)(%d)")
+	local mPrefix,mNum = string.match(xmlOrbDisplayFrame2.orb.galaxy1.texture:GetTexture(),"(orb_rotation_%a+)(%d)")
 	CommitButton.textureElement.rotation = mPrefix
 	UpdateOrbTextures()
 
@@ -1427,21 +1459,21 @@ function UpdateXMLTextures(orb)
 	xmlOrbDisplayFrame2.orb.galaxy3.texture:SetTexture(orb.galaxy3.texture:GetTexture())
 
 	--we'll come back to this one later...
-	--local num = table.getn(D32FillTextureChoices)
-	--for i=0,num,1 do
-	--	local fillPrefix = strmatch(D32FillTextureChoices[i],"(MDO_orb_filling%d+)")
-	--	if tostring(CommitButton.textureElement.fill) == fillPrefix then
+	-- local num = table.getn(D32FillTextureChoices)
+	-- for i=0,num,1 do
+	-- 	local fillPrefix = strmatch(D32FillTextureChoices[i],"(MDO_orb_filling%d+)")
+	-- 	if tostring(CommitButton.textureElement.fill) == fillPrefix then
 
-	--	end
-	--endd
+	-- 	end
+	-- endd
 
-	--num = table.getn(D32RotationTextureChoices)
-	--for i=0,num,1 do
-	--	local rotationPrefix = strmatch(D32RotationTextureChoices[i],"(orb_rotation_%a+)")
-	--	if tostring(CommitButton.textureElement.rotation) == rotationPrefix then
+	-- num = table.getn(D32RotationTextureChoices)
+	-- for i=0,num,1 do
+	-- 	local rotationPrefix = strmatch(D32RotationTextureChoices[i],"(orb_rotation_%a+)")
+	-- 	if tostring(CommitButton.textureElement.rotation) == rotationPrefix then
 
-	--	end
-	--end
+	-- 	end
+	-- end
 
 	UIDropDownMenu_SetText(FillTexturesDropDown,"Choose one...")
 	UIDropDownMenu_SetText(RotationTexturesDropDown,"Choose one...")
@@ -1457,9 +1489,9 @@ function UpdateXMLColors(orbColor,galaxyColor,font1,font2)
 	local r, g, b, a = xmlOrbDisplayFrame2.orb.filling:GetVertexColor(orbColor.r,orbColor.g,orbColor.b,orbColor.a);
 end
 
-function TestXMLColorUpdate()
-	UpdateXMLColors(D32CharacterData.healthOrb.orbColor, D32CharacterData.healthOrb.galaxy, D32CharacterData.healthOrb.font1,D32CharacterData.healthOrb.font2);
-end
+-- function TestXMLColorUpdate()
+-- 	UpdateXMLColors(D32CharacterData.healthOrb.orbColor, D32CharacterData.healthOrb.galaxy, D32CharacterData.healthOrb.font1,D32CharacterData.healthOrb.font2);
+-- end
 
 function UpdateXMLText(orb, formatting)
 	local textValue1 = orb.font1:GetText();
@@ -1482,7 +1514,7 @@ function UpdateXMLText(orb, formatting)
 end
 
 function FillXMLTemplate(frame)
-	frame.orb = CreateXMLOrb(xmlOrbDisplayFrame2,"D32_XMLOrb",150,defaultTextures.healthOrb.fill,defaultTextures.healthOrb.rotation)
+	frame.orb = CreateXMLOrb(xmlOrbDisplayFrame2,"xmlOrbDisplayFrame2",150,defaultTextures.healthOrb.fill,defaultTextures.healthOrb.rotation)
 	frame.orb.galaxy1.texture:SetAlpha(0.5)
 	frame.orb.galaxy2.texture:SetAlpha(0.5)
 	frame.orb.galaxy3.texture:SetAlpha(0.5)
@@ -1591,7 +1623,7 @@ healthOrb = CreateOrb(nil,"D32_HealthOrb",defaultOrbSize,defaultTextures.healthO
 manaOrb = CreateOrb(nil,"D32_ManaOrb",defaultOrbSize,defaultTextures.manaOrb.fill,defaultTextures.manaOrb.rotation,250,0,"BOTTOM",monitorPower)
 petOrb = CreatePetOrb(healthOrb,"D32_PetOrb",87,-95,70,nil)
 powerFrame = nil
-if D32className == "Paladin" or D32className == "Warlock" or D32className == "Rogue" or D32className == "Druid" or D32className == "Monk" or D32className == "Priest" or D32className == "Shaman" then powerFrame =  createPowerFrame(images.."d32_powerFrame.tga",manaOrb,"PowerFrame",95,50,50,50) end
+if D32className == "Paladin" or D32className == "Warlock" or D32className == "Rogue" or D32className == "Druid" or D32className == "Monk" or D32className == "Priest" or D32className == "Death Knight" or D32className == "Evoker" or D32className == "Shaman" then powerFrame =  createPowerFrame(images.."d32_powerFrame.tga",manaOrb,"PowerFrame",95,50,50,50) end
 if powerFrame then makeFrameMovable(powerFrame) end
 angelFrame = addArtwork(images.."d3_angel2test.tga",manaOrb,"AngelFrame",70,5,160,160)
 demonFrame = addArtwork(images.."d3_demon2test.tga",healthOrb,"DemonFrame",-90,5,160,160)
